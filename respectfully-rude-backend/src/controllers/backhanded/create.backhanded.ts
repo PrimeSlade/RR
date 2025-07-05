@@ -14,7 +14,8 @@ const createList = async (c: Context) => {
 
   const arrayBuffer = await imgFile?.arrayBuffer();
   const buffer = Buffer.from(arrayBuffer);
-  const img = `data:image/jpeg;base64,${buffer.toString("base64")}`;
+  //const img = `data:image/jpeg;base64,${buffer.toString("base64")}`;
+  const img = `data:${imgFile?.type};base64,${buffer.toString("base64")}`;
 
   try {
     // @ts-ignore

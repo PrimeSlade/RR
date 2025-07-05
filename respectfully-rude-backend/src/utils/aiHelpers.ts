@@ -4,7 +4,8 @@ import { GoogleGenAI } from "@google/genai";
 export const backhandedOutput = async (
   name: string,
   text: string,
-  img: any
+  img: any,
+  mimeType: string = "image/jpeg"
 ) => {
   const ai = new GoogleGenAI({
     apiKey: process.env.GEMINI_API_KEY,
@@ -28,7 +29,7 @@ export const backhandedOutput = async (
     "compliments": [
       {
         "text": "Backhanded compliment here.",
-        "prompt": "Expected based on the img and complimented text For example: Make this person look like a complete cartoon loser with: messy hair, drooling mouth, dark eye bags, goofy glasses, a shocked expression, cartoon scars on their cheeks, bad fashion and also very funny and cartoonish style"
+        "prompt": "Expected based on the img and complimented text For example: Make this person look like a complete cartoon loser with: messy hair, drooling mouth, dark eye bags, goofy glasses, a shocked expression, cartoon scars on their cheeks, bad fashion and also very funny"
       }
     ]
   }
@@ -36,7 +37,7 @@ export const backhandedOutput = async (
         },
       ],
       inlineData: {
-        mimeType: "image/jpeg",
+        mimeType: mimeType,
         data: img,
       },
     },
@@ -50,10 +51,6 @@ export const backhandedOutput = async (
     });
 
     const res = response?.candidates?.[0]?.content?.parts?.[0]?.text;
-    // let res: string = "";
-    // for await (const chunk of response) {
-    //   res += chunk.text;
-    // }
 
     if (!res) {
       throw new Error("No text in model response");
